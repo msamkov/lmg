@@ -1,0 +1,24 @@
+version: '3'
+services:
+  db:
+    image: postgres:12.1
+    environment:
+      - POSTGRES_DB=lmg_db
+      - POSTGRES_USER=lmg_user
+      - POSTGRES_PASSWORD=df99a564-9d07-444c
+    ports:
+      - 54310:5432
+    expose:
+      - 5432
+    networks:
+      - backend
+    # max_connections = 500
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all -c max_connections=500
+
+
+networks:
+  backend:
+    driver: bridge
+
+
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="0002-add-bonus-cards-table" author="mv.samkov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="bonus_cards"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="bonus_cards" remarks="Бонусные карты">
+            <column name="id" type="bigserial" remarks="Уникальный идентификатор">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="bonus_currency" type="text" remarks="Код бонусной валюты"/>
+            <column name="number" type="text" remarks="Номер карты"/>
+            <column name="client_id" type="bigint" remarks="Ссылается на ID Клиента">
+                <constraints foreignKeyName="bonus_cards_client_id_fk"
+                             referencedTableName="clients"
+                             referencedColumnNames="id" />
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
